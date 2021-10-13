@@ -33,8 +33,11 @@ $ ./class explanatory-ROT.ini
 Modifications are explained below.
 
 (1) rotation.c
+
 This module computes the rotated CMB anisotropy power spectra. Two parameters involve here
 * alpha
+
 The isotropic cosmic rotation angle {\bar{alpha}}
+
 * A_cb
-The amplitude of the cosmic rotation power spectrum. 
+The amplitude of the cosmic rotation power spectrum.
