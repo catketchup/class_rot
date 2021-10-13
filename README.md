@@ -2,6 +2,7 @@
 
 # CLASS_ROT: CLASS for ROTATED CMB POWER SPECTRA
 
+A modified version of the publicly available Einstein-Boltzmann code [CLASS](https://github.com/lesgourg/class_public) to implement Rotated CMB Power Spectra.
 
 ## CLASS edited by
 - Hongbo Cai
@@ -9,7 +10,6 @@
 
 ## Files
 
-All CLASS files in the directory class, the relevant file for the sampler Cobaya is in the  directory cobaya.
 
 ## Installation
 
@@ -29,4 +29,3 @@ CLASS_ROT can be run in C just as normal CLASS. See explanatory-ROT.ini for ROT 
 $ ./class explanatory-ROT.ini
 
 ## Modifications to CLASS
-
