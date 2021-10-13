@@ -29,3 +29,12 @@ CLASS_ROT can be run in C just as normal CLASS. See explanatory-ROT.ini for ROT 
 $ ./class explanatory-ROT.ini
 
 ## Modifications to CLASS
+
+Modifications are explained below.
+
+(1) rotation.c
+This module computes the rotated CMB anisotropy power spectra. Two parameters involve here
+* alpha
+The isotropic cosmic rotation angle {\bar{alpha}}
+* A_cb
+The amplitude of the cosmic rotation power spectrum. 
