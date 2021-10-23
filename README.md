@@ -18,23 +18,23 @@ $ make class
 ## Examples
 
 ### Python
-Jupyter notebooks with worked out examples in Python can be found [here](https://github.com/mwt5345/class_ede/tree/master/class/notebooks-ede).
+Jupyter notebooks with worked out examples in Python can be found [here](https://github.com/catketchup/class_rot/tree/main/notebooks_rot).
 
 ### C
 
 CLASS_ROT can be run in C just as normal CLASS. See explanatory-ROT.ini for ROT implementation details.
 
-$ ./class explanatory-ROT.ini
+$ ./class explanatory_ROT.ini
 
 ## Modifications to CLASS
 Modifications are explained below.
 
-(1) rotation.c
+(1) rotation.c:
 
 This module computes the rotated CMB anisotropy power spectra. Two parameters involve here
-* alpha
+(2) alpha:
 
-The isotropic cosmic rotation angle {\bar{alpha}}
+The isotropic cosmic rotation angle
 
-* A_cb
+(3) A_cb:
 The amplitude of the cosmic rotation power spectrum.
