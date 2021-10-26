@@ -32,6 +32,7 @@ Modifications are explained below.
 (1) rotation.c:
 
 This module computes the rotated CMB anisotropy power spectra. Two parameters involve here
+
 (2) alpha:
 
 The isotropic cosmic rotation angle
