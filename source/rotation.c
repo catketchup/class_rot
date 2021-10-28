@@ -335,6 +335,7 @@ int rotation_init(
                   pro->error_message);
   }
 
+  cl_aa[1] = 2.*_PI_*pro->A_cb*1E-5/2;
   for (l=2; l<=pro->l_unrotated_max; l++) {
     class_call(harmonic_cl_at_l(phr,l,cl_unrotated,cl_md,cl_md_ic),
                phr->error_message,
@@ -881,7 +882,7 @@ int rotation_cl_aa(double A_cb,
   int index_l;
   pro->cl_rot[pro->index_lt_aa] = 0;
   for(index_l=1; index_l < pro->l_size; index_l++){
-    pro->cl_rot[index_l*pro->lt_size+pro->index_lt_aa] = 2.*_PI_*A_cb*10E-5/(index_l*(index_l+1));
+    pro->cl_rot[index_l*pro->lt_size+pro->index_lt_aa] = 2.*_PI_*A_cb*1E-5/(index_l*(index_l+1));
   }
 
   return _SUCCESS_;
