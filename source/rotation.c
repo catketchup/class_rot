@@ -374,7 +374,7 @@ int rotation_init(
   for (index_mu=0; index_mu<num_mu; index_mu++) {
     Ca[index_mu] = 0;
 
-    for (l=2; l<=pro->l_unrotated_max; l++) {
+    for (l=1; l<=pro->l_unrotated_max; l++) {
       Ca[index_mu] += (2.*l+1.)*cl_aa[l]*d00[index_mu][l];
     }
 
@@ -460,7 +460,7 @@ int rotation_init(
 
 
   if (pro->has_ee==_TRUE_ || pro->has_bb==_TRUE_) {
-    class_call(rotation_rotated_cl_ee_bb(ksip,ksim,d22,dm22,w8,pro->alpha,Ca[num_mu-1],num_mu-1,pro),
+    class_call(rotation_rotated_cl_ee_bb(ksip,ksim,d22,dm22,w8,pro->alpha,Ca[0],num_mu-1,pro),
                pro->error_message,
                pro->error_message);
 
