@@ -124,7 +124,7 @@ int rotation_init(
   double * cl_ee = NULL; /* unrotated cl, to be filled to avoid repeated calls to harmonic_cl_at_l or roting_cl_at_l */
   double * cl_bb = NULL; /* unrotated cl, to be filled to avoid repeated calls to harmonic_cl_at_l or roting_cl_at_l */
   double * cl_eb = NULL; /* unrotated cl, to be filled to avoid repeated calls to harmonic_cl_at_l or roting_cl_at_l */
-  double * cl_aa; /* potential cl_aa */
+  double * cl_aa; /* array to store rotation power spectrum cl_aa */
 
   double res, resX, rot;
   double resp, resm, rotp, rotm;
@@ -136,10 +136,6 @@ int rotation_init(
                          cl_md[index_md][index_ct] */
 
   int index_md;
-
-  /* Timing */
-  //double debut, fin;
-  //double cpu_time;
 
   /** - check that we really want to compute at least one spectrum */
 
@@ -190,7 +186,6 @@ int rotation_init(
 
   if (ppr->accurate_rotation == _TRUE_) {
 
-    //debut = omp_get_wtime();
     class_call(quadrature_gauss_legendre(mu,
                                          w8,
                                          num_mu-1,
@@ -198,9 +193,6 @@ int rotation_init(
                                          pro->error_message),
                pro->error_message,
                pro->error_message);
-    //fin = omp_get_wtime();
-    //cpu_time = (fin-debut);
-    //printf("time in quadrature_gauss_legendre=%4.3f s\n",cpu_time);
 
   } else { /* Crude integration on [0,pi/16]: Riemann sum on theta */
     delta_theta = _PI_/16. / (double)(num_mu-1);
@@ -262,7 +254,6 @@ int rotation_init(
   }
 
 
-  //debut = omp_get_wtime();
   class_call(lensing_d00(mu,num_mu,pro->l_unrotated_max,d00),
              pro->error_message,
              pro->error_message);
@@ -368,7 +359,6 @@ int rotation_init(
 
   /** - Compute Ca\f$(\mu)\f$ **/
 
-  //debut = omp_get_wtime();
 #pragma omp parallel for                        \
   private (index_mu,l)                          \
   schedule (static)
@@ -405,7 +395,7 @@ int rotation_init(
                  sizeof(double),
                  pro->error_message);
   }
-  //debut = omp_get_wtime();
+
 #pragma omp parallel for                                \
   private (index_mu, l, ll, resp, resm, resX, fac)	\
   schedule (static)
@@ -440,12 +430,8 @@ int rotation_init(
       ksiX[index_mu] *= exp(-4*Ca[index_mu]);
     }
   }
-  //fin = omp_get_wtime();
-  //cpu_time = (fin-debut);
-  //printf("time in ksi=%4.3f s\n",cpu_time);
 
   /** - compute rotated \f$ C_l\f$'s by multiplation or integration */
-  //debut = omp_get_wtime();
   if (pro->has_tt==_TRUE_) {
     class_call(rotation_rotated_cl_tt(cl_tt,pro),
                pro->error_message,
@@ -480,15 +466,6 @@ int rotation_init(
                pro->error_message,
                pro->error_message);
   }
-
-  /* if (pro->has_aa==_TRUE_) { */
-  /*   class_call(rotation_cl_aa(pro->A_cb,pro), */
-  /*              pro->error_message, */
-  /*              pro->error_message); */
-  /* } */
-  //fin=omp_get_wtime();
-  //cpu_time = (fin-debut);
-  //printf("time in final lensing computation=%4.3f s\n",cpu_time);
 
   /** - spline computed \f$ C_l\f$'s in view of interpolation */
 
@@ -615,14 +592,6 @@ int rotation_indices(
     pro->has_eb = _TRUE_;
     pro->index_lt_eb=phr->index_ct_eb;
   }
-
-  /* if (pro->has_aa = _TRUE_) { */
-  /*   pro->index_lt_aa=index_ct; */
-  /*   index_ct++; */
-  /* } */
-  /* else { */
-  /*   pro->has_aa = _FALSE_; */
-  /* } */
 
   pro->lt_size = phr->ct_size;
 
@@ -874,7 +843,6 @@ int rotation_rotated_cl_eb(double *ksiX,
 
   return _SUCCESS_;
 }
-
 
 int rotation_cl_aa(double A_cb,
                    struct rotation * pro
