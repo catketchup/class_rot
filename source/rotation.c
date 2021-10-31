@@ -1,12 +1,12 @@
 /** @file rotation.c Documented rotation module
  *
- * Hongbo Cai 09/25/2021, debugged with Yilun Guan
+ * Hongbo Cai and Yilun Guan, 09/25/2021
  *
  * This module computes the rotated temperature and polarization
  * anisotropy power spectra \f$ C_l^{X},\f$'s given the
  * unrotated temperature, polarization power spectra, isotropic rotation angle and amplitude of rotation power spectrum.
  *
- * Follows the full-sky method, https://arxiv.org/abs/2006.01811
+ * Follows the full-sky method, https://arxiv.org/pdf/0810.0403.pdf and https://arxiv.org/pdf/1303.1881.pdf
  *
  * The following functions can be called from other modules:
  *
