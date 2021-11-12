@@ -2,9 +2,13 @@
 
 A modified version of the publicly available Einstein-Boltzmann code [CLASS](https://github.com/lesgourg/class_public) to implement Rotated CMB Power Spectra.
 
+See ...
+
+![](https://github.com/catketchup/class_rot/blob/main/figures_ROT/ps_sims.pdf) <!-- .element height="6%" width="13.5%" -->
+
 ## CLASS edited by
-- Hongbo Cai
-- Yilun Guan
+- Hongbo Cai; hoc34@pitt.edu
+- Yilun Guan; yilun.guan@dunlap.utoronto.ca
 
 ## Files
 
