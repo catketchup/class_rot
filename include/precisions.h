@@ -555,7 +555,7 @@ class_precision_parameter(tol_gauss_legendre,double,ppr->smallest_allowed_variat
  * Rotation precision parameters
  */
 
-class_precision_parameter(accurate_rotation,int,_TRUE_) /**< switch between Gauss-Legendre quadrature integration and simple quadrature on a subdomain of angles */
+class_precision_parameter(accurate_rotation,int,_FALSE_) /**< switch between Gauss-Legendre quadrature integration and simple quadrature on a subdomain of angles */
 
 /*
  * Spectral distortions precision parameters
