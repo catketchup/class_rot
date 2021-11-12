@@ -4,7 +4,7 @@ A modified version of the publicly available Einstein-Boltzmann code [CLASS](htt
 
 See ...
 
-![](https://github.com/catketchup/class_rot/blob/tree/figures_ROT/ps_sims.pdf) <!-- .element height="6%" width="13.5%" -->
+![](https://github.com/catketchup/class_rot/blob/main/figures_ROT/ps_sims.pdf) <!-- .element height="6%" width="13.5%" -->
 
 ## CLASS edited by
 - Hongbo Cai; hoc34@pitt.edu
