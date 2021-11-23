@@ -326,19 +326,20 @@ int rotation_init(
                   pro->error_message);
   }
 
-  cl_aa[1] = 2.*_PI_*pro->A_cb*1E-5/2;
+  /* generate cl_aa */
+  for (l=1; l<=pro->l_unrotated_max; l++) {
+    cl_aa[l] = 2.*_PI_*pro->A_cb*1E-5/(l*(l+1));
+  }
+
   for (l=2; l<=pro->l_unrotated_max; l++) {
     class_call(harmonic_cl_at_l(phr,l,cl_unrotated,cl_md,cl_md_ic),
                phr->error_message,
                pro->error_message);
     cl_tt[l] = cl_unrotated[pro->index_lt_tt];
-    /* generate cl_aa */
-    cl_aa[l] = 2.*_PI_*pro->A_cb*1E-5/(l*(l+1));
     if (pro->has_ee==_TRUE_ || pro->has_bb==_TRUE_) {
       cl_ee[l] = cl_unrotated[pro->index_lt_ee];
       cl_bb[l] = cl_unrotated[pro->index_lt_bb];
     }
-
     if (pro->has_te==_TRUE_) {
       cl_te[l] = cl_unrotated[pro->index_lt_te];
     }
