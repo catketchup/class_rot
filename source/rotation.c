@@ -19,6 +19,19 @@
 #include "lensing.h"
 #include <time.h>
 
+
+/**
+ * Define rotation power spectrum.
+ *
+ * @param pro       Input: pointer to rotation structure
+ * @param l         Input: multipole number
+ * @return the rotation power spectrum at given l
+ */
+
+double rotation_cl_aa_at_l(struct rotation * pro, int l) {
+  return 2.*_PI_*pro->A_cb/(l*(l+1));
+}
+
 /**
  * Anisotropy power spectra \f$ C_l\f$'s for all types, modes and initial conditions.
  * SO FAR: ONLY SCALAR
@@ -328,7 +341,7 @@ int rotation_init(
 
   /* generate cl_aa */
   for (l=1; l<=pro->l_unrotated_max; l++) {
-    cl_aa[l] = 2.*_PI_*pro->A_cb*1E-5/(l*(l+1));
+    cl_aa[l] = rotation_cl_aa_at_l(pro, l);
   }
 
   for (l=2; l<=pro->l_unrotated_max; l++) {
@@ -843,17 +856,4 @@ int rotation_rotated_cl_eb(double *ksiX,
   }
 
   return _SUCCESS_;
-}
-
-int rotation_cl_aa(double A_cb,
-                   struct rotation * pro
-                   ){
-  int index_l;
-  pro->cl_rot[pro->index_lt_aa] = 0;
-  for(index_l=1; index_l < pro->l_size; index_l++){
-    pro->cl_rot[index_l*pro->lt_size+pro->index_lt_aa] = 2.*_PI_*A_cb*1E-5/(index_l*(index_l+1));
-  }
-
-  return _SUCCESS_;
-
 }

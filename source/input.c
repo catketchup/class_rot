@@ -1448,7 +1448,7 @@ int input_read_precisions(struct file_content * pfc,
                           struct fourier * pfo,
                           struct lensing *ple,
                           struct distortions *psd,
-						  struct rotation *pro,
+                          struct rotation *pro,
                           struct output *pop,
                           ErrorMsg errmsg){
 
