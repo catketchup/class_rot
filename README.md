@@ -43,3 +43,24 @@ The isotropic cosmic rotation angle
 
 (3) A_cb:
 The amplitude of the cosmic rotation power spectrum.
+
+## Cite us
+If you use our code in a published work, please cite our paper:
+
+```
+@ARTICLE{classrot,
+       author = {{Cai}, Hongbo and {Guan}, Yilun},
+        title = "{Computing Microwave Background Polarization Power Spectra from Cosmic Birefringence}",
+      journal = {arXiv e-prints},
+     keywords = {Astrophysics - Cosmology and Nongalactic Astrophysics},
+         year = 2021,
+        month = nov,
+          eid = {arXiv:2111.14199},
+        pages = {arXiv:2111.14199},
+archivePrefix = {arXiv},
+       eprint = {2111.14199},
+ primaryClass = {astro-ph.CO},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2021arXiv211114199C},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+```
