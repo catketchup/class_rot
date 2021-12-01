@@ -1,8 +1,10 @@
+[![](https://img.shields.io/badge/arXiv-2111.14199%20-red.svg)](https://arxiv.org/abs/2111.14199)
+
 # CLASS_ROT: CLASS for ROTATED CMB POWER SPECTRA
 
 A modified version of the publicly available Einstein-Boltzmann code [CLASS](https://github.com/lesgourg/class_public) to implement Rotated CMB Power Spectra.
 
-See ...
+See [Hill et al.](https://arxiv.org/abs/2111.14199) where CLASS_ROT is introduced and tested.
 
 ![](https://github.com/catketchup/class_rot/blob/main/figures_ROT/ps_sims.png) <!-- .element height="6%" width="13.5%" -->
 
