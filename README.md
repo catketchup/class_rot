@@ -46,8 +46,8 @@ The isotropic cosmic rotation angle
 
 (2) A_cb:
 
-The amplitude of the scale-invariant Gaussian random cosmic rotation power spectrum, defined by:
-![formula](https://render.githubusercontent.com/render/math?math=\frac{L(L+1)}{2 \pi} C_{L}^{\alpha \alpha}=A_{C B})
+The amplitude of the scale-invariant Gaussian random cosmic rotation power spectrum
+
 
 ## Cite us
 If you use our code in a published work, please cite our paper:
