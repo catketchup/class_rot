@@ -32,20 +32,22 @@ CLASS_ROT can be run in C just as normal CLASS. See explanatory-ROT.ini for ROT 
 
 $ ./class explanatory_ROT.ini
 
-## Modifications to CLASS
+## New package added to CLASS
 Modifications are explained below.
 
 (1) [rotation.c](https://github.com/catketchup/class_rot/blob/main/source/rotation.c):
 
-This module computes the rotated CMB anisotropy power spectra. Two parameters involve here
+This module computes the rotated CMB anisotropy power spectra.
 
-(2) alpha:
+## Important Parameters
+(1) alpha:
 
 The isotropic cosmic rotation angle
 
-(3) A_cb:
+(2) A_cb:
 
-The amplitude of the scale-invariant Gaussian random cosmic rotation power spectrum.
+The amplitude of the scale-invariant Gaussian random cosmic rotation power spectrum, defined by:
+$\frac{L(L+1)}{2 \pi} C_{L}^{\alpha \alpha}=A_{C B}$
 
 ## Cite us
 If you use our code in a published work, please cite our paper:
