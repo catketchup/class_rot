@@ -556,6 +556,7 @@ class_precision_parameter(tol_gauss_legendre,double,ppr->smallest_allowed_variat
  */
 
 class_precision_parameter(accurate_rotation,int,_TRUE_) /**< switch between Gauss-Legendre quadrature integration and simple quadrature on a subdomain of angles */
+class_precision_parameter(perturb_rotation,int,_FALSE_) /**< switch between non-perturbative method and perturbative method of rotated CMB power spectra */
 
 /*
  * Spectral distortions precision parameters

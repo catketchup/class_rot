@@ -6,7 +6,7 @@
  * anisotropy power spectra \f$ C_l^{X},\f$'s given the
  * unrotated temperature, polarization power spectra, isotropic rotation angle and amplitude of rotation power spectrum.
  *
- * Follows the full-sky method, https://arxiv.org/pdf/0810.0403.pdf and https://arxiv.org/pdf/1303.1881.pdf
+ * Follows the full-sky method introduced in https://arxiv.org/abs/1303.1881.
  *
  * The following functions can be called from other modules:
  *
@@ -856,4 +856,33 @@ int rotation_rotated_cl_eb(double *ksiX,
   }
 
   return _SUCCESS_;
+}
+
+/**
+ * This routine computes the rotation power spectra by Gaussian quadrature using perturbative method
+ *
+ * @param ksip  Input: rotated correlation function (ksi+[index_mu])
+ * @param ksim  Input: rotated correlation function (ksi-[index_mu])
+ * @param d22   Input: Wigner d-function (\f$ d^l_{22}\f$[l][index_mu])
+ * @param dm22  Input: Wigner d-function (\f$ d^l_{-22}\f$[l][index_mu])
+ * @param w8    Input: Legendre quadrature weights (w8[index_mu])
+ * @param alpha Input: Isotropic rotation angle
+ * @param Ca0   Input: (C^{\alapha{0}})
+ * @param nmu   Input: Number of quadrature points (0<=index_mu<=nmu)
+ * @param pro   Input/output: Pointer to the rotation structure
+ * @return the error status
+ */
+
+int rotation_rotated_cl_bb_perturb(double *Ca,
+                                        int nmu,
+                                        struct rotation * pro
+  ){
+  int imu;
+  int index_l;
+
+  /** Integration by Gauss-Legendre quadrature. **/
+#pragma omp parallel for                        \
+  private (imu,index_l,clp,clm)                 \
+  schedule (static)
+
 }
