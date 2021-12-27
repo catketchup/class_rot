@@ -125,6 +125,9 @@ int rotation_init(
   double * ksim = NULL; /* ksim[index_mu] */
   double * ksiX = NULL; /* ksiX[index_mu] */
 
+  double * ksip_ptb = NULL; /* ksip[index_mu] */
+  double * ksim_ptb = NULL; /* ksim[index_mu] */
+
   double fac;
 
   int num_mu,index_mu,icount;
@@ -140,7 +143,9 @@ int rotation_init(
   double * cl_aa; /* array to store rotation power spectrum cl_aa */
 
   double res, resX, rot;
-  double resp, resm, rotp, rotm;
+  double resp, resm;
+
+  double resp_ptb, resm_ptb;
 
   double ** cl_md_ic; /* array with argument
                          cl_md_ic[index_md][index_ic1_ic2*phr->ct_size+index_ct] */
@@ -400,6 +405,19 @@ int rotation_init(
                  (num_mu-1),
                  sizeof(double),
                  pro->error_message);
+
+    if (ppr->perturb_rotation==_TRUE_){
+
+      class_calloc(ksip_ptb,
+                   (num_mu-1),
+                   sizeof(double),
+                   pro->error_message);
+      class_calloc(ksip_ptb,
+                   (num_mu-1),
+                   sizeof(double),
+                   pro->error_message);
+    }
+
   }
 
   /** - --> ksiX is for EB **/
@@ -429,6 +447,14 @@ int rotation_init(
 
         ksip[index_mu] += resp;
         ksim[index_mu] += resm;
+
+        if (ppr->perturb_rotation==_TRUE_){
+          resp_ptb = fac*d22[index_mu][l]*cl_ee[l];
+          resm_ptb = fac*dm22[index_mu][l]*cl_ee[l];
+
+          ksip_ptb[index_mu] += resp_ptb;
+          ksim_ptb[index_mu] += resm_ptb;
+        }
       }
 
       if (pro->has_eb==_TRUE_) {
@@ -440,10 +466,16 @@ int rotation_init(
 
     ksip[index_mu] *= exp(4*Ca[index_mu]);
     ksim[index_mu] *= exp(-4*Ca[index_mu]);
+
+    if (ppr->perturb_rotation==_TRUE_) {
+      ksip_ptb[index_mu] *= Ca[index_mu];
+      ksim_ptb[index_mu] *= Ca[index_mu];
+    }
     if (pro->has_eb == _TRUE_) {
       ksiX[index_mu] *= exp(-4*Ca[index_mu]);
     }
   }
+
 
   /** - compute rotated \f$ C_l\f$'s by multiplation or integration */
   if (pro->has_tt==_TRUE_) {
@@ -464,6 +496,11 @@ int rotation_init(
     class_call(rotation_rotated_cl_ee_bb(ksip,ksim,d22,dm22,w8,pro->alpha,Ca[0],num_mu-1,pro),
                pro->error_message,
                pro->error_message);
+    if (ppr->perturb_rotation==_TRUE_) {
+      class_call(rotation_rotated_cl_bb_perturb(ksip_ptb,ksim_ptb,d22,dm22,w8,num_mu-1,pro),
+                 pro->error_message,
+                 pro->error_message);
+    }
 
   }
 
@@ -873,16 +910,30 @@ int rotation_rotated_cl_eb(double *ksiX,
  * @return the error status
  */
 
-int rotation_rotated_cl_bb_perturb(double *Ca,
-                                        int nmu,
-                                        struct rotation * pro
+int rotation_rotated_cl_bb_perturb(double *ksip_ptb,
+                                   double *ksim_ptb,
+                                   double **d22,
+                                   double **dm22,
+                                   double *w8,
+                                   int nmu,
+                                   struct rotation * pro
   ){
+  double clbb_ptb;
   int imu;
   int index_l;
 
   /** Integration by Gauss-Legendre quadrature. **/
 #pragma omp parallel for                        \
-  private (imu,index_l,clp,clm)                 \
+  private (imu,index_l,clbb_ptb)                 \
   schedule (static)
 
+  for(index_l=0; index_l < pro->l_size; index_l++){
+    clbb_ptb=0;
+    for (imu=0;imu<nmu;imu++){
+      clbb_ptb += (ksip_ptb[imu]*d22[imu][(int)pro->l[index_l]] + ksim_ptb[imu]*dm22[imu][(int)pro->l[index_l]])*w8[imu];
+    }
+    pro->cl_rot[index_l*pro->lt_size+pro->index_lt_bb]=clbb_ptb;
+  }
+
+  return _SUCCESS_;
 }
