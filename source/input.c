@@ -4659,50 +4659,68 @@ int input_read_parameters_rotation(struct file_content * pfc,
 								   struct perturbations * ppt,
 								   struct rotation * pro,
 								   ErrorMsg errmsg){
-	/** Summary: */
+  /** Summary: */
 
-	/** Define local variables */
-	int flag1, flag2;
-	double param1, param2;
-	char string1[_ARGUMENT_LENGTH_MAX_];
+  /** Define local variables */
+  int flag1, flag2, flag3, flag4;
+  double param1, param2;
+  char string1[_ARGUMENT_LENGTH_MAX_];
+  char string2[_ARGUMENT_LENGTH_MAX_];
+  char string3[_ARGUMENT_LENGTH_MAX_];
 
-	/** 1) Rotated spectra? */
-	/* Read */
-	class_call(parser_read_string(pfc,"rotation",&string1,&flag1,errmsg),
-			   errmsg,
-			   errmsg);
-	/* Complete set of parameters */
-	/* check */
-	if ((flag1 == _TRUE_) && (string_begins_with(string1,'y') || string_begins_with(string1,'Y'))){
-		if ((ppt->has_scalars == _TRUE_) && ((ppt->has_cl_cmb_temperature == _TRUE_) || (ppt->has_cl_cmb_polarization == _TRUE_)) && (pro->has_cl_cmb_rotation_spectrum)){
-			pro->has_rotated_cls = _TRUE_;
-			/* Slightly increase precision by delta_l_max for more precise lensed Cl's*/
-			ppt->l_scalar_max += ppr->delta_l_max;
-		}
-		else {
-			class_stop(errmsg,"you asked for rotated CMB Cls, but this requires a minimal number of options: 'modes' should include 's', 'output' should include 'tCl' and/or 'pCl', and also, importantly, 'rCl', the rotation field power spectrum.");
-		}
-	}
+  /** 1) Rotated spectra? */
+  /* Read */
+  class_call(parser_read_string(pfc,"rotation",&string1,&flag1,errmsg),
+             errmsg,
+             errmsg);
+  /* Complete set of parameters */
+  /* check */
+  if ((flag1 == _TRUE_) && (string_begins_with(string1,'y') || string_begins_with(string1,'Y'))){
+    if ((ppt->has_scalars == _TRUE_) && ((ppt->has_cl_cmb_temperature == _TRUE_) || (ppt->has_cl_cmb_polarization == _TRUE_)) && (pro->has_cl_cmb_rotation_spectrum)){
+      pro->has_rotated_cls = _TRUE_;
+      /* Slightly increase precision by delta_l_max for more precise lensed Cl's*/
+      ppt->l_scalar_max += ppr->delta_l_max;
+    }
+    else {
+      class_stop(errmsg,"you asked for rotated CMB Cls, but this requires a minimal number of options: 'modes' should include 's', 'output' should include 'tCl' and/or 'pCl', and also, importantly, 'rCl', the rotation field power spectrum.");
+    }
+  }
 
-	/* Read */
-	if ((ppt->has_scalars == _TRUE_) && (ppt->has_rotation == _TRUE_)) {
+  /* Read */
+  if ((ppt->has_scalars == _TRUE_) && (ppt->has_rotation == _TRUE_)) {
 
-		class_call(parser_read_double(pfc, "alpha",&param1,&flag1,errmsg),
-				   errmsg,
-				   errmsg);
-		class_call(parser_read_double(pfc, "A_cb",&param2,&flag2,errmsg),
-				   errmsg,
-				   errmsg);
-		if (flag1 == _TRUE_) {
-          pro->alpha = param1/(180/_PI_);
-		}
-		if (flag2 == _TRUE_) {
-			pro->A_cb = param2;
-		}
+    class_call(parser_read_double(pfc, "alpha",&param1,&flag1,errmsg),
+               errmsg,
+               errmsg);
+    class_call(parser_read_double(pfc, "A_cb",&param2,&flag2,errmsg),
+               errmsg,
+               errmsg);
+    class_call(parser_read_string(pfc, "input_claa",&string2,&flag3,errmsg),
+               errmsg,
+               errmsg);
+    class_call(parser_read_string(pfc, "perturb_rotation",&string3,&flag4,errmsg),
+               errmsg,
+               errmsg);
+    if (flag1 == _TRUE_) {
+      pro->alpha = param1/(180/_PI_);
+    }
+    if ((flag2 == _TRUE_) && (flag3 == _FALSE_)) {
+      pro->A_cb = param2;
+    }
+    if ((flag2 == _FALSE_) && (flag3 == _TRUE_)) {
+      strcpy(pro->input_claa, string2);
+      pro->claa_from_file = _TRUE_;
+    }
+    if ((flag2 == _TRUE_) && (flag3 == _TRUE_)) {
+      class_stop(errmsg,"A_cb and input_claa should not be given both");
+    }
+    if (flag4==_TRUE_) {
+      pro->perturb_rotation = _TRUE_;
+    }
 
-	}
+  }
 
-	return _SUCCESS_;
+  return _SUCCESS_;
 }
 
 

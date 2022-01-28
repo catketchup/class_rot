@@ -15,6 +15,7 @@
  * -# rotation_free() at the end
  */
 
+#include <stdio.h>
 #include "rotation.h"
 #include "lensing.h"
 #include <time.h>
@@ -51,10 +52,10 @@ double rotation_cl_aa_at_l(struct rotation * pro, int l) {
  */
 
 int rotation_cl_at_l(
-                     struct rotation * pro,
-                     int l,
-                     double * cl_rotated    /* array with argument cl_rotated[index_ct] (must be already allocated) */
-                     ) {
+  struct rotation * pro,
+  int l,
+  double * cl_rotated    /* array with argument cl_rotated[index_ct] (must be already allocated) */
+  ) {
 
   int last_index;
   int index_lt;
@@ -97,12 +98,12 @@ int rotation_cl_at_l(
  */
 
 int rotation_init(
-                  struct precision * ppr,
-                  struct perturbations * ppt,
-                  struct harmonic * phr,
-                  struct fourier * pfo,
-                  struct rotation * pro
-                  ) {
+  struct precision * ppr,
+  struct perturbations * ppt,
+  struct harmonic * phr,
+  struct fourier * pfo,
+  struct rotation * pro
+  ) {
 
   /** Summary: */
   /** - Define local variables */
@@ -266,7 +267,7 @@ int rotation_init(
 
   if (pro->has_eb==_TRUE_ && pro->has_ee==_FALSE_ && pro->has_bb == _FALSE_) {
   	for (index_mu=0; index_mu<num_mu; index_mu++){
-  		dm22[index_mu] = &(buf_dxx[icount+(index_mu+num_mu)  * (pro->l_unrotated_max+1)]);
+      dm22[index_mu] = &(buf_dxx[icount+(index_mu+num_mu)  * (pro->l_unrotated_max+1)]);
   	}
   	icount +=num_mu*(pro->l_unrotated_max+1);
   }
@@ -344,10 +345,21 @@ int rotation_init(
                   pro->error_message);
   }
 
-  /* generate cl_aa */
-  for (l=1; l<=pro->l_unrotated_max; l++) {
-    cl_aa[l] = rotation_cl_aa_at_l(pro, l);
+  /* use input cl_aa or generate cl_aa */
+  if (pro->claa_from_file==_TRUE_) {
+    FILE *f;
+    f = fopen(pro->input_claa, "r");
+    for (l=1; l<=pro->l_unrotated_max; l++) {
+      fscanf(f, "%lf", &cl_aa[l]);
+    }
+    fclose(f);
   }
+  else{
+    for (l=1; l<=pro->l_unrotated_max; l++) {
+      cl_aa[l] = rotation_cl_aa_at_l(pro, l);
+  }
+  }
+
 
   for (l=2; l<=pro->l_unrotated_max; l++) {
     class_call(harmonic_cl_at_l(phr,l,cl_unrotated,cl_md,cl_md_ic),
@@ -406,7 +418,7 @@ int rotation_init(
                  sizeof(double),
                  pro->error_message);
 
-    if (ppr->perturb_rotation==_TRUE_){
+    if (pro->perturb_rotation==_TRUE_){
 
       class_calloc(ksip_ptb,
                    (num_mu-1),
@@ -428,7 +440,7 @@ int rotation_init(
                  pro->error_message);
   }
 
-#pragma omp parallel for                                \
+#pragma omp parallel for                            \
   private (index_mu, l, ll, resp, resm, resX, fac)	\
   schedule (static)
 
@@ -448,7 +460,7 @@ int rotation_init(
         ksip[index_mu] += resp;
         ksim[index_mu] += resm;
 
-        if (ppr->perturb_rotation==_TRUE_){
+        if (pro->perturb_rotation==_TRUE_){
           resp_ptb = fac*d22[index_mu][l]*cl_ee[l];
           resm_ptb = fac*dm22[index_mu][l]*cl_ee[l];
 
@@ -467,7 +479,7 @@ int rotation_init(
     ksip[index_mu] *= exp(4*Ca[index_mu]);
     ksim[index_mu] *= exp(-4*Ca[index_mu]);
 
-    if (ppr->perturb_rotation==_TRUE_) {
+    if (pro->perturb_rotation==_TRUE_) {
       ksip_ptb[index_mu] *= Ca[index_mu];
       ksim_ptb[index_mu] *= Ca[index_mu];
     }
@@ -496,7 +508,7 @@ int rotation_init(
     class_call(rotation_rotated_cl_ee_bb(ksip,ksim,d22,dm22,w8,pro->alpha,Ca[0],num_mu-1,pro),
                pro->error_message,
                pro->error_message);
-    if (ppr->perturb_rotation==_TRUE_) {
+    if (pro->perturb_rotation==_TRUE_) {
       class_call(rotation_rotated_cl_bb_perturb(ksip_ptb,ksim_ptb,d22,dm22,w8,num_mu-1,pro),
                  pro->error_message,
                  pro->error_message);
@@ -567,8 +579,8 @@ int rotation_init(
  */
 
 int rotation_free(
-                  struct rotation * pro
-                  ) {
+  struct rotation * pro
+  ) {
 
   if (pro->has_rotated_cls == _TRUE_) {
 
@@ -584,10 +596,10 @@ int rotation_free(
 }
 
 int rotation_indices(
-                     struct precision * ppr,
-                     struct harmonic * phr,
-                     struct rotation * pro
-                     ){
+  struct precision * ppr,
+  struct harmonic * phr,
+  struct rotation * pro
+  ){
 
   int index_l;
 
@@ -775,7 +787,7 @@ int rotation_rotated_cl_te(double *cl_te,
                            double alpha,
                            double Ca0,
                            struct rotation * pro
-                           ){
+  ){
   int index_l;
   for(index_l=0; index_l<pro->l_size; index_l++){
     pro->cl_rot[index_l*pro->lt_size+pro->index_lt_te] = cl_te[(int)pro->l[index_l]]*cos(2*pro->alpha)*exp(-2*Ca0);
@@ -798,7 +810,7 @@ int rotation_rotated_cl_tb(double *cl_te,
                            double alpha,
                            double Ca0,
                            struct rotation * pro
-                           ){
+  ){
   int index_l;
   for(index_l=0; index_l<pro->l_size; index_l++){
     pro->cl_rot[index_l*pro->lt_size+pro->index_lt_tb] = cl_te[(int)pro->l[index_l]]*sin(2*pro->alpha)*exp(-2*Ca0);
@@ -830,7 +842,7 @@ int rotation_rotated_cl_ee_bb(double *ksip,
                               double Ca0,
                               int nmu,
                               struct rotation * pro
-                              ){
+  ){
 
   double clp, clm;
   int imu;
@@ -873,7 +885,7 @@ int rotation_rotated_cl_eb(double *ksiX,
                            double Ca0,
                            int nmu,
                            struct rotation * pro
-                           ){
+  ){
 
   double clX;
   int imu;
@@ -922,7 +934,7 @@ int rotation_rotated_cl_bb_perturb(double *ksip_ptb,
 
   /** Integration by Gauss-Legendre quadrature. **/
 #pragma omp parallel for                        \
-  private (imu,index_l,clbb_ptb)                 \
+  private (imu,index_l,clbb_ptb)                \
   schedule (static)
 
   for(index_l=0; index_l < pro->l_size; index_l++){
