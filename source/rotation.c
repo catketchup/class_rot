@@ -412,7 +412,7 @@ int rotation_init(
                    (num_mu-1),
                    sizeof(double),
                    pro->error_message);
-      class_calloc(ksip_ptb,
+      class_calloc(ksim_ptb,
                    (num_mu-1),
                    sizeof(double),
                    pro->error_message);
@@ -898,13 +898,11 @@ int rotation_rotated_cl_eb(double *ksiX,
 /**
  * This routine computes the rotation power spectra by Gaussian quadrature using perturbative method
  *
- * @param ksip  Input: rotated correlation function (ksi+[index_mu])
- * @param ksim  Input: rotated correlation function (ksi-[index_mu])
+ * @param ksip_ptb  Input: rotated correlation function (ksi+[index_mu])
+ * @param ksim_ptb  Input: rotated correlation function (ksi-[index_mu])
  * @param d22   Input: Wigner d-function (\f$ d^l_{22}\f$[l][index_mu])
  * @param dm22  Input: Wigner d-function (\f$ d^l_{-22}\f$[l][index_mu])
  * @param w8    Input: Legendre quadrature weights (w8[index_mu])
- * @param alpha Input: Isotropic rotation angle
- * @param Ca0   Input: (C^{\alapha{0}})
  * @param nmu   Input: Number of quadrature points (0<=index_mu<=nmu)
  * @param pro   Input/output: Pointer to the rotation structure
  * @return the error status
