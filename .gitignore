@@ -14,3 +14,7 @@ RealSpaceInterface/cache/
 .DS_Store
 doc/manual/html
 doc/manual/latex
+.ipynb_checkpoints
+GPATH
+GRTAGS
+GTAGS

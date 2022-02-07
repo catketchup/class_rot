@@ -345,11 +345,11 @@ int rotation_init(
                   pro->error_message);
   }
 
-  /* use input cl_aa or generate cl_aa */
+  /* use input cl_aa or generate scale-invariant cl_aa */
   if (pro->claa_from_file==_TRUE_) {
     FILE *f;
     f = fopen(pro->input_claa, "r");
-    for (l=1; l<=pro->l_unrotated_max; l++) {
+    for (l=0; l<=pro->l_unrotated_max; l++) {
       fscanf(f, "%lf", &cl_aa[l]);
     }
     fclose(f);
