@@ -21,10 +21,28 @@ After cloning or downloading the repository, compile CLASS_ROT with make
 
 $ make class
 
+## Important Parameters
+(1) alpha:
+
+The isotropic cosmic rotation angle
+
+(2) A_cb:
+
+The amplitude of the scale-invariant Gaussian random cosmic rotation power spectrum
+
+(3) input_claa
+The input generic rotation power spectrum
+
+'A_cb' and 'input_claa' should not be given together.
+
 ## Examples
 
 ### Python
 Jupyter notebooks with worked out examples in Python can be found [here](https://github.com/catketchup/class_rot/tree/main/notebooks_rot).
+
+[cl_rot.ipynb](https://github.com/catketchup/class_rot/tree/main/notebooks_rot/cl_rot.ipynb) is for using a scale-invariant rotation power spectrum.
+
+[use_input_claa.ipynb](https://github.com/catketchup/class_rot/tree/main/notebooks_rot/use_input_claa.ipynb) is for using an input generic rotation power spectrum.
 
 ### C
 
@@ -38,15 +56,6 @@ Modifications are explained below.
 (1) [rotation.c](https://github.com/catketchup/class_rot/blob/main/source/rotation.c):
 
 This module computes the rotated CMB anisotropy power spectra.
-
-## Important Parameters
-(1) alpha:
-
-The isotropic cosmic rotation angle
-
-(2) A_cb:
-
-The amplitude of the scale-invariant Gaussian random cosmic rotation power spectrum
 
 
 ## Cite us
