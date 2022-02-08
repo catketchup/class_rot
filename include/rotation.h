@@ -153,6 +153,13 @@ extern "C" {
                              struct rotation * pro);
 
 
+  int rotation_rotated_cl_bb_perturb(double *ksip_ptb,
+                                     double *ksim_ptb,
+                                     double **d22,
+                                     double **dm22,
+                                     double *w8,
+                                     int nmu,
+                                     struct rotation * pro);
 #ifdef __cplusplus
 }
 #endif

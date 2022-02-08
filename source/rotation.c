@@ -910,8 +910,8 @@ int rotation_rotated_cl_eb(double *ksiX,
 /**
  * This routine computes the rotation power spectra by Gaussian quadrature using perturbative method
  *
- * @param ksip_ptb  Input: rotated correlation function (ksi+[index_mu])
- * @param ksim_ptb  Input: rotated correlation function (ksi-[index_mu])
+ * @param ksip_ptb  Input:
+ * @param ksim_ptb  Input: 
  * @param d22   Input: Wigner d-function (\f$ d^l_{22}\f$[l][index_mu])
  * @param dm22  Input: Wigner d-function (\f$ d^l_{-22}\f$[l][index_mu])
  * @param w8    Input: Legendre quadrature weights (w8[index_mu])
