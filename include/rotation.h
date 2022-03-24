@@ -109,6 +109,7 @@ extern "C" {
   int rotation_init(struct precision * ppr,
                     struct perturbations * ppt,
                     struct harmonic * phr,
+                    struct lensing *ple,
                     struct fourier * pfo,
                     struct rotation * pro);
 

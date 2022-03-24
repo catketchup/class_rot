@@ -546,7 +546,7 @@ class_precision_parameter(mmax_for_p1h_integral,double,1.e18)
  * Lensing precision parameters
  */
 
-class_precision_parameter(accurate_lensing,int,_FALSE_) /**< switch between Gauss-Legendre quadrature integration and simple quadrature on a subdomain of angles */
+class_precision_parameter(accurate_lensing,int,_TRUE_) /**< switch between Gauss-Legendre quadrature integration and simple quadrature on a subdomain of angles */
 class_precision_parameter(num_mu_minus_lmax,int,70) /**< difference between num_mu and l_max, increase for more precision */
 class_precision_parameter(delta_l_max,int,500)/**< difference between l_max in unlensed and lensed spectra */
 class_precision_parameter(tol_gauss_legendre,double,ppr->smallest_allowed_variation) /**< tolerance with which quadrature points are found: must be very small for an accurate integration (if not entered manually, set automatically to match machine precision) */

@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
     return _FAILURE_;
   }
 
-  if (rotation_init(&pr,&pt,&hr,&fo,&ro) == _FAILURE_) {
+  if (rotation_init(&pr,&pt,&hr,&le,&fo,&ro) == _FAILURE_) {
 	  printf("\n\nError in rotation_init \n=>%s\n",ro.error_message);
 	  return _FAILURE_;
   }

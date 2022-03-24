@@ -101,6 +101,7 @@ int rotation_init(
   struct precision * ppr,
   struct perturbations * ppt,
   struct harmonic * phr,
+  struct lensing *ple,
   struct fourier * pfo,
   struct rotation * pro
   ) {
@@ -360,11 +361,33 @@ int rotation_init(
   }
   }
 
-
-  for (l=2; l<=pro->l_unrotated_max; l++) {
-    class_call(harmonic_cl_at_l(phr,l,cl_unrotated,cl_md,cl_md_ic),
-               phr->error_message,
+  /* compute rotated lensed Cl, if "lensing" is given */
+  if (ppt->has_cl_cmb_lensing_potential == _TRUE_){
+    /* note here we l_lensed_max = l_rotated_max, we have to use l<=pro->l_rotated_max, so the last num_mu_minus_lmax numbers are not accurate */
+    for (l=2; l<=pro->l_rotated_max; l++) {
+      class_call(lensing_cl_at_l(ple,l,cl_unrotated),
+               ple->error_message,
                pro->error_message);
+    }
+
+    cl_tt[l] = cl_unrotated[pro->index_lt_tt];
+    if (pro->has_ee==_TRUE_ || pro->has_bb==_TRUE_) {
+      cl_ee[l] = cl_unrotated[pro->index_lt_ee];
+      cl_bb[l] = cl_unrotated[pro->index_lt_bb];
+    }
+    if (pro->has_te==_TRUE_) {
+      cl_te[l] = cl_unrotated[pro->index_lt_te];
+    }
+  }
+
+  /* else, compute rotated raw cl */
+  else {
+    for (l=2; l<=pro->l_unrotated_max; l++) {
+      class_call(harmonic_cl_at_l(phr,l,cl_unrotated,cl_md,cl_md_ic),
+                 phr->error_message,
+                 pro->error_message);
+    }
+
     cl_tt[l] = cl_unrotated[pro->index_lt_tt];
     if (pro->has_ee==_TRUE_ || pro->has_bb==_TRUE_) {
       cl_ee[l] = cl_unrotated[pro->index_lt_ee];
@@ -911,7 +934,7 @@ int rotation_rotated_cl_eb(double *ksiX,
  * This routine computes the rotation power spectra by Gaussian quadrature using perturbative method
  *
  * @param ksip_ptb  Input:
- * @param ksim_ptb  Input: 
+ * @param ksim_ptb  Input:
  * @param d22   Input: Wigner d-function (\f$ d^l_{22}\f$[l][index_mu])
  * @param dm22  Input: Wigner d-function (\f$ d^l_{-22}\f$[l][index_mu])
  * @param w8    Input: Legendre quadrature weights (w8[index_mu])

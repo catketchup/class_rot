@@ -368,7 +368,7 @@ cdef extern from "class.h":
     int transfer_init(void*,void*,void*,void*,void*,void*)
     int harmonic_init(void*,void*,void*,void*,void*,void*,void*)
     int lensing_init(void*,void*,void*,void*,void*)
-    int rotation_init(void*,void*,void*,void*,void*)
+    int rotation_init(void*,void*,void*,void*,void*,void*)
     int distortions_init(void*,void*,void*,void*,void*,void*)
 
     int background_tau_of_z(void* pba, double z,double* tau)

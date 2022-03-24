@@ -252,7 +252,7 @@ cdef class Class:
                 level.append("lensing")
         if "rotation" in level:
             if "harmonic" not in level:
-                level.append("harmonic")
+                level.append("rotation")
         if "lensing" in level:
             if "harmonic" not in level:
                 level.append("harmonic")
@@ -438,7 +438,7 @@ cdef class Class:
             self.ncp.add("lensing")
 
         if "rotation" in level:
-            if rotation_init(&(self.pr), &(self.pt), &(self.hr),
+            if rotation_init(&(self.pr), &(self.pt), &(self.hr), &(self.le),
                             &(self.fo), &(self.ro)) == _FAILURE_:
                 self.struct_cleanup()
                 raise CosmoComputationError(self.ro.error_message)
