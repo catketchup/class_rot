@@ -4678,7 +4678,7 @@ int input_read_parameters_rotation(struct file_content * pfc,
   if ((flag1 == _TRUE_) && (string_begins_with(string1,'y') || string_begins_with(string1,'Y'))){
     if ((ppt->has_scalars == _TRUE_) && ((ppt->has_cl_cmb_temperature == _TRUE_) || (ppt->has_cl_cmb_polarization == _TRUE_)) && (pro->has_cl_cmb_rotation_spectrum)){
       pro->has_rotated_cls = _TRUE_;
-      /* Slightly increase precision by delta_l_max for more precise lensed Cl's*/
+      /* Slightly increase precision by delta_l_max for more rotation lensed Cl's*/
       ppt->l_scalar_max += ppr->delta_l_max;
     }
     else {

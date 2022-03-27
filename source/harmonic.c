@@ -454,6 +454,17 @@ int harmonic_indices(
       phr->has_bb = _FALSE_;
     }
 
+    
+    if ((ppt->has_rotation == _TRUE_)) {
+      phr->has_tb = _TRUE_;
+      phr->index_ct_tb=index_ct;
+      index_ct ++;
+
+      phr->has_eb = _TRUE_;
+      phr->index_ct_eb=index_ct;
+      index_ct ++;
+    }
+
     /* types of C_l's relevant only for scalars: phi-phi, T-phi, E-phi, d-d, T-d */
 
     if ((ppt->has_cl_cmb_lensing_potential == _TRUE_) && (ppt->has_scalars == _TRUE_)) {
@@ -559,16 +570,6 @@ int harmonic_indices(
     }
     else {
       phr->has_dl = _FALSE_;
-    }
-
-    if ((ppt->has_rotation == _TRUE_)) {
-      phr->has_tb = _TRUE_;
-      phr->index_ct_tb=index_ct;
-      index_ct ++;
-
-      phr->has_eb = _TRUE_;
-      phr->index_ct_eb=index_ct;
-      index_ct ++;
     }
 
     phr->ct_size = index_ct;

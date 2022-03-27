@@ -117,6 +117,7 @@ extern "C" {
 
   int rotation_indices(struct precision * ppr,
                        struct harmonic * phr,
+                       struct lensing *ple,
                        struct rotation * pro);
 
   /* int rotation_rotated_cl_tt( */

@@ -177,7 +177,7 @@ int rotation_init(
   /** - initialize indices and allocate some of the arrays in the
       rotation structure */
 
-  class_call(rotation_indices(ppr,phr,pro),
+  class_call(rotation_indices(ppr,phr,ple,pro),
              pro->error_message,
              pro->error_message);
 
@@ -298,9 +298,16 @@ int rotation_init(
               num_mu*sizeof(double),
               pro->error_message);
 
-  class_alloc(cl_unrotated,
-              phr->ct_size*sizeof(double),
-              pro->error_message);
+  if (ple->has_lensed_cls == _TRUE_) {
+    class_alloc(cl_unrotated,
+                ple->lt_size*sizeof(double),
+                pro->error_message);
+  }
+  else {
+    class_alloc(cl_unrotated,
+                phr->ct_size*sizeof(double),
+                pro->error_message);
+  }
 
   /** - Locally store unrotated temperature \f$ cl\f$ and potential \f$ cl_{aa}\f$ spectra **/
   class_alloc(cl_tt,
@@ -361,22 +368,22 @@ int rotation_init(
   }
   }
 
-  /* compute rotated lensed Cl, if "lensing" is given */
-  if (ppt->has_cl_cmb_lensing_potential == _TRUE_){
+  /* compute rotated lensed cl, if "lensing" is given */
+  if (ple->has_lensed_cls == _TRUE_){
     /* note here we l_lensed_max = l_rotated_max, we have to use l<=pro->l_rotated_max, so the last num_mu_minus_lmax numbers are not accurate */
-    for (l=2; l<=pro->l_rotated_max; l++) {
+    for (l=2; l<=pro->l_unrotated_max; l++) {
       class_call(lensing_cl_at_l(ple,l,cl_unrotated),
                ple->error_message,
                pro->error_message);
-    }
 
-    cl_tt[l] = cl_unrotated[pro->index_lt_tt];
-    if (pro->has_ee==_TRUE_ || pro->has_bb==_TRUE_) {
-      cl_ee[l] = cl_unrotated[pro->index_lt_ee];
-      cl_bb[l] = cl_unrotated[pro->index_lt_bb];
-    }
-    if (pro->has_te==_TRUE_) {
-      cl_te[l] = cl_unrotated[pro->index_lt_te];
+      cl_tt[l] = cl_unrotated[ple->index_lt_tt];
+      if (pro->has_ee==_TRUE_ || pro->has_bb==_TRUE_) {
+        cl_ee[l] = cl_unrotated[ple->index_lt_ee];
+        cl_bb[l] = cl_unrotated[ple->index_lt_bb];
+      }
+      if (pro->has_te==_TRUE_) {
+        cl_te[l] = cl_unrotated[ple->index_lt_te];
+      }
     }
   }
 
@@ -386,15 +393,16 @@ int rotation_init(
       class_call(harmonic_cl_at_l(phr,l,cl_unrotated,cl_md,cl_md_ic),
                  phr->error_message,
                  pro->error_message);
-    }
 
-    cl_tt[l] = cl_unrotated[pro->index_lt_tt];
-    if (pro->has_ee==_TRUE_ || pro->has_bb==_TRUE_) {
-      cl_ee[l] = cl_unrotated[pro->index_lt_ee];
-      cl_bb[l] = cl_unrotated[pro->index_lt_bb];
-    }
-    if (pro->has_te==_TRUE_) {
-      cl_te[l] = cl_unrotated[pro->index_lt_te];
+      cl_tt[l] = cl_unrotated[pro->index_lt_tt];
+      if (pro->has_ee==_TRUE_ || pro->has_bb==_TRUE_) {
+        cl_ee[l] = cl_unrotated[pro->index_lt_ee];
+        cl_bb[l] = cl_unrotated[pro->index_lt_bb];
+      }
+      if (pro->has_te==_TRUE_) {
+        cl_te[l] = cl_unrotated[pro->index_lt_te];
+
+      }
     }
   }
 
@@ -621,6 +629,7 @@ int rotation_free(
 int rotation_indices(
   struct precision * ppr,
   struct harmonic * phr,
+  struct lensing * ple,
   struct rotation * pro
   ){
 
@@ -683,7 +692,12 @@ int rotation_indices(
 
   /* number of multipoles */
 
-  pro->l_unrotated_max = phr->l_max_tot;
+  if (ple->has_lensed_cls == _TRUE_){
+    pro->l_unrotated_max = ple->l_lensed_max;
+  }
+  else {
+    pro->l_unrotated_max = phr->l_max_tot;
+  }
 
   pro->l_rotated_max = pro->l_unrotated_max - ppr->delta_l_max;
 
