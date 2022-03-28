@@ -251,6 +251,8 @@ cdef class Class:
             if "lensing" not in level:
                 level.append("lensing")
         if "rotation" in level:
+            if "lensing" not in level:
+                level.append("lensing")
             if "harmonic" not in level:
                 level.append("rotation")
         if "lensing" in level:
