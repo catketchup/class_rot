@@ -44,6 +44,8 @@ Jupyter notebooks with worked out examples in Python can be found [here](https:/
 
 [use_input_claa.ipynb](https://github.com/catketchup/class_rot/tree/main/notebooks_rot/use_input_claa.ipynb) is for using an input generic rotation power spectrum.
 
+[cl_rot_lens.ipynb]() is for testing rotated-lensed Cl,  and compare it with lensed-raw Cl and rotated-raw Cl.
+
 ### C
 
 CLASS_ROT can be run in C just as normal CLASS. See explanatory-ROT.ini for ROT implementation details.
