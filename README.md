@@ -8,7 +8,7 @@ See [Cai et al.](https://arxiv.org/abs/2111.14199) where CLASS_ROT is introduced
 
 ![](https://github.com/catketchup/class_rot/blob/main/figures_ROT/ps_sims.png) <!-- .element height="6%" width="13.5%" -->
 
-![](https://github.com/catketchup/class_rot/blob/main/figures_ROT/cl_rot_lens.png) <!-- .element height="6%" width="13.5%" -->
+![](https://github.com/catketchup/class_rot/blob/main/figures_ROT/cl_lens_rot.png) <!-- .element height="6%" width="13.5%" -->
 
 ## CLASS edited by
 - Hongbo Cai; hoc34@pitt.edu
