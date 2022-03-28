@@ -8,6 +8,8 @@ See [Cai et al.](https://arxiv.org/abs/2111.14199) where CLASS_ROT is introduced
 
 ![](https://github.com/catketchup/class_rot/blob/main/figures_ROT/ps_sims.png) <!-- .element height="6%" width="13.5%" -->
 
+![](https://github.com/catketchup/class_rot/blob/main/figures_ROT/cl_rot_lens.png) <!-- .element height="6%" width="13.5%" -->
+
 ## CLASS edited by
 - Hongbo Cai; hoc34@pitt.edu
 - Yilun Guan; yilun.guan@dunlap.utoronto.ca
@@ -44,7 +46,7 @@ Jupyter notebooks with worked out examples in Python can be found [here](https:/
 
 [use_input_claa.ipynb](https://github.com/catketchup/class_rot/tree/main/notebooks_rot/use_input_claa.ipynb) is for using an input generic rotation power spectrum.
 
-[cl_rot_lens.ipynb]() is for testing rotated-lensed Cl,  and compare it with lensed-raw Cl and rotated-raw Cl.
+[cl_rot_lens.ipynb](https://github.com/catketchup/class_rot/blob/main/notebooks_rot/cl_rot_lens.ipynb) is for generating rotated-lensed Cl,  and compare it with lensed-raw Cl and rotated-raw Cl.
 
 ### C
 
