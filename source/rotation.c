@@ -529,14 +529,14 @@ int rotation_init(
   }
 
   if (pro->has_te==_TRUE_) {
-    class_call(rotation_rotated_cl_te(cl_te,pro->alpha,Ca[0],pro),
+    class_call(rotation_rotated_cl_te(cl_te,pro->alpha,Ca[num_mu-1],pro),
                pro->error_message,
                pro->error_message);
   }
 
 
   if (pro->has_ee==_TRUE_ || pro->has_bb==_TRUE_) {
-    class_call(rotation_rotated_cl_ee_bb(ksip,ksim,d22,dm22,w8,pro->alpha,Ca[0],num_mu-1,pro),
+    class_call(rotation_rotated_cl_ee_bb(ksip,ksim,d22,dm22,w8,pro->alpha,Ca[num_mu-1],num_mu-1,pro),
                pro->error_message,
                pro->error_message);
     if (pro->perturb_rotation==_TRUE_) {
@@ -549,14 +549,14 @@ int rotation_init(
 
   if (pro->has_tb==_TRUE_) {
     pro->l_max_lt[pro->index_lt_tb] = ppt->l_scalar_max;
-    class_call(rotation_rotated_cl_tb(cl_te,pro->alpha,Ca[0],pro),
+    class_call(rotation_rotated_cl_tb(cl_te,pro->alpha,Ca[num_mu-1],pro),
                pro->error_message,
                pro->error_message);
   }
 
   if (pro->has_eb==_TRUE_) {
     pro->l_max_lt[pro->index_lt_eb] = ppt->l_scalar_max;
-    class_call(rotation_rotated_cl_eb(ksiX,dm22,w8,pro->alpha,Ca[0],num_mu-1,pro),
+    class_call(rotation_rotated_cl_eb(ksiX,dm22,w8,pro->alpha,Ca[num_mu-1],num_mu-1,pro),
                pro->error_message,
                pro->error_message);
   }
