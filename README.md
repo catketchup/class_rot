@@ -21,7 +21,7 @@ See [Cai et al.](https://arxiv.org/abs/2111.14199) where CLASS_ROT is introduced
 
 After cloning or downloading the repository, compile CLASS_ROT with make
 
-$ make class
+$ make
 
 ## Important Parameters
 (1) alpha:
@@ -32,7 +32,8 @@ The isotropic cosmic rotation angle
 
 The amplitude of the scale-invariant Gaussian random cosmic rotation power spectrum
 
-(3) input_claa
+(3) input_claa:
+
 The input generic rotation power spectrum
 
 'A_cb' and 'input_claa' should not be given together.
@@ -46,7 +47,7 @@ Jupyter notebooks with worked out examples in Python can be found [here](https:/
 
 [use_input_claa.ipynb](https://github.com/catketchup/class_rot/tree/main/notebooks_rot/use_input_claa.ipynb) is for using an input generic rotation power spectrum.
 
-[cl_rot_lens.ipynb](https://github.com/catketchup/class_rot/blob/main/notebooks_rot/cl_rot_lens.ipynb) is for generating rotated-lensed Cl,  and compare it with lensed-raw Cl and rotated-raw Cl.
+[cl_rot_lens.ipynb](https://github.com/catketchup/class_rot/blob/main/notebooks_rot/cl_rot_lens.ipynb) is for generating rotated-lensed Cl,  and comparing it with lensed-raw Cl and rotated-raw Cl.
 
 ### C
 
